@@ -85,7 +85,10 @@ public class ApiGatewaySdkSwaggerApiImporter extends ApiGatewaySdkApiImporter im
 
         cleanupMethods(api, swagger.getBasePath(), swagger.getPaths());
         cleanupResources(api, swagger.getBasePath(), swagger.getPaths());
-        cleanupModels(api, swagger.getDefinitions().keySet());
+
+        if(swagger.getDefinitions() != null) {
+            cleanupModels(api, swagger.getDefinitions().keySet());
+        }
     }
 
     private String getApiName(Swagger swagger, String fileName) {
@@ -94,7 +97,9 @@ public class ApiGatewaySdkSwaggerApiImporter extends ApiGatewaySdkApiImporter im
     }
 
     private void createModels(RestApi api, Map<String, com.wordnik.swagger.models.Model> definitions, List<String> produces) {
+        LOG.info("Creating Models.");
         if (definitions == null) {
+            LOG.info("definitions is null - exiting without doing work.");
             return;
         }
 
@@ -377,7 +382,9 @@ public class ApiGatewaySdkSwaggerApiImporter extends ApiGatewaySdkApiImporter im
     }
 
     private void updateModels(RestApi api, Map<String, com.wordnik.swagger.models.Model> definitions, List<String> apiProduces) {
+        LOG.info("Updating Models.");
         if (definitions == null) {
+            LOG.info("definitions is null - exiting without doing work.");
             return;
         }
 
